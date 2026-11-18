@@ -1,0 +1,161 @@
+backend:
+  name: github
+  repo: TODO_NATI/allorganic-site
+  branch: main
+# local_backend: true   # רק לעבודה מקומית (npx decap-server). לא מפעילים באתר החי
+media_folder: public/images
+public_folder: /images
+locale: he
+collections:
+  - name: pages
+    label: עמודים
+    files:
+      - name: home
+        label: עמוד הבית
+        file: content/pages/home.md
+        fields:
+          - { name: title, label: כותרת, widget: string }
+          - { name: hero_message, label: מסר ראשי, widget: string }
+          - { name: hero_image, label: תמונת פתיחה, widget: image, required: false }
+          - { name: hero_image_alt, label: טקסט חלופי לתמונה, widget: string, required: false }
+          - { name: connects_title, label: כותרת "מה מחבר את המותגים", widget: string }
+          - name: connects_items
+            label: טענות מאושרות
+            widget: list
+            required: false
+            fields:
+              - { name: brand, label: מותג (slug), widget: string }
+              - { name: text, label: נוסח, widget: string }
+      - name: story
+        label: הסיפור שלנו
+        file: content/pages/story.md
+        fields:
+          - name: stages
+            label: שלבים
+            widget: list
+            required: false
+            fields:
+              - { name: year, label: שנה, widget: string, required: false }
+              - { name: title, label: כותרת, widget: string }
+              - { name: text, label: טקסט, widget: text }
+              - { name: image, label: תמונה, widget: image }
+              - { name: image_alt, label: טקסט חלופי (חובה), widget: string }
+          - name: values
+            label: ערכים (3-4)
+            widget: list
+            required: false
+            fields:
+              - { name: title, label: ערך, widget: string }
+              - { name: text, label: משפט, widget: string }
+      - name: values
+        label: ערכים ועקרונות
+        file: content/pages/values.md
+        fields:
+          - { name: draft, label: טיוטה, widget: boolean, default: true }
+          - { name: mission_title, label: כותרת הייעוד, widget: string }
+          - { name: mission, label: הייעוד, widget: text }
+          - { name: values_title, label: כותרת הערכים, widget: string }
+          - name: values
+            label: ערכים
+            widget: list
+            fields:
+              - { name: tab, label: שם קצר (בלשונית), widget: string }
+              - { name: title_thin, label: כותרת (חלק דק), widget: string, required: false }
+              - { name: title_bold, label: כותרת (חלק מודגש), widget: string }
+              - { name: text, label: טקסט, widget: text }
+              - { name: art, label: איור, widget: select, options: [house, shield, label, route] }
+              - { name: href, label: קישור, widget: string, required: false }
+              - { name: cta, label: טקסט הקישור, widget: string, required: false }
+          - { name: principles_title, label: כותרת העקרונות, widget: string }
+          - { name: principles, label: עקרונות, widget: list }
+      - name: vision
+        label: החזון
+        file: content/pages/vision.md
+        fields:
+          - { name: draft, label: טיוטה, widget: boolean, default: true }
+          - { name: title, label: כותרת, widget: string }
+          - { name: text, label: טקסט, widget: text }
+          - { name: image, label: תמונה, widget: image }
+          - { name: image_alt, label: טקסט חלופי (חובה), widget: string }
+      - name: capabilities
+        label: היכולות שלנו
+        file: content/pages/capabilities.md
+        fields:
+          - { name: draft, label: טיוטה, widget: boolean, default: true }
+          - { name: goal_title, label: כותרת, widget: string }
+          - { name: goal, label: המטרה שלנו, widget: text }
+      - { name: accessibility, label: הצהרת נגישות, file: content/pages/accessibility.md, fields: [{ name: title, label: כותרת, widget: string }, { name: body, label: תוכן, widget: markdown }] }
+      - { name: privacy, label: פרטיות, file: content/pages/privacy.md, fields: [{ name: title, label: כותרת, widget: string }, { name: body, label: תוכן, widget: markdown }] }
+      - { name: cookies, label: עוגיות, file: content/pages/cookies.md, fields: [{ name: title, label: כותרת, widget: string }, { name: body, label: תוכן, widget: markdown }] }
+      - { name: terms, label: תנאי שימוש, file: content/pages/terms.md, fields: [{ name: title, label: כותרת, widget: string }, { name: body, label: תוכן, widget: markdown }] }
+  - name: standards
+    label: סטנדרטים
+    folder: content/standards
+    extension: md
+    format: frontmatter
+    create: false
+    fields:
+      - { name: brand, label: מותג (slug), widget: string }
+      - { name: certificate_file, label: קובץ תעודה (הרדוף/השדה בלבד), widget: image, required: false }
+      - { name: certifier, label: גוף מסמיך, widget: string, required: false }
+      - name: claims
+        label: טענות (רק עם מסמך)
+        widget: list
+        required: false
+        fields: [{ name: text, label: טענה, widget: string }]
+  - name: brand_about
+    label: אודות המותגים
+    folder: content/brands
+    extension: md
+    format: frontmatter
+    create: false
+    fields:
+      - { name: brand, label: מותג (slug), widget: string }
+      - { name: source, label: מקור (לשימוש פנימי, לא מוצג), widget: string, required: false }
+      - { name: hold, label: לא להציג עדיין, widget: boolean, default: false }
+      - { name: body, label: טקסט האודות, widget: markdown }
+  - name: recipes
+    label: מתכונים
+    folder: content/recipes
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { name: title, label: שם המתכון, widget: string }
+      - { name: slug, label: כתובת (slug), widget: string }
+      - { name: image, label: תמונה, widget: image }
+      - { name: image_alt, label: טקסט חלופי (חובה), widget: string }
+      - { name: summary, label: תקציר, widget: text }
+      - { name: brands, label: מותגים, widget: list, required: false }
+      - { name: products_used, label: מוצרים בשימוש, widget: list, required: false }
+      - name: ingredients
+        label: מרכיבים
+        widget: list
+        fields: [{ name: quantity, label: כמות, widget: string, required: false }, { name: unit, label: יחידה, widget: string, required: false }, { name: item, label: מרכיב, widget: string }]
+      - { name: steps, label: שלבים, widget: list }
+      - { name: prep_time, label: זמן הכנה, widget: string, required: false }
+      - { name: servings, label: מנות, widget: string, required: false }
+      - { name: tags, label: תגיות, widget: list, required: false }
+      - { name: date, label: תאריך, widget: datetime }
+      - { name: draft, label: טיוטה, widget: boolean, default: true }
+  - name: settings
+    label: הגדרות
+    files:
+      - name: site
+        label: הגדרות האתר
+        file: content/settings/site.yml
+        fields:
+          - { name: company_name, label: שם החברה, widget: string }
+          - { name: address, label: כתובת, widget: string }
+          - { name: instagram, label: Instagram, widget: string }
+          - { name: facebook, label: Facebook, widget: string, required: false }
+          - { name: phone, label: טלפון, widget: string, required: false }
+          - { name: email, label: דוא"ל ליצירת קשר, widget: string, required: false }
+          - { name: tagline, label: סלוגן, widget: string }
+          - { name: umbrella_logo, label: לוגו עליון, widget: string }
+          - name: instagram_curated
+            label: פוסטים נבחרים באינסטגרם
+            widget: list
+            required: false
+            fields: [{ name: image, widget: image, label: תמונה }, { name: alt, widget: string, label: טקסט חלופי }, { name: url, widget: string, label: קישור }]
